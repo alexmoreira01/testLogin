@@ -1,0 +1,266 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Todo List Documentation",
+    "description": "This is an API for todos control",
+    "version": "2.0.0",
+    "contact": {
+      "email": "alex.moreira.andrade@hotmail.com"
+    }
+  },
+  "paths": {
+    "/todo": {
+      "post": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Create a todo",
+        "description": "Create a new todo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "label": "title todo sample"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Title already exists!"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "List all todos",
+        "description": "List all todos",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todo/{status}": {
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "List a todos by status",
+        "description": "List a todo by status",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "Todo status",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "completed | pending"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todo/find/{id}": {
+      "get": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "List a todo",
+        "description": "List a todo by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Todo id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "label": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/todo/{id}": {
+      "put": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Update a todo",
+        "description": "Update a todo by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Todo id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "label": "title todo update sample",
+                  "status": "completed"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Todo not exists!"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Todo"
+        ],
+        "summary": "Delete a todo",
+        "description": "Delete a todo by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Todo id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Todo not existing!"
+          }
+        }
+      }
+    }
+  }
+}

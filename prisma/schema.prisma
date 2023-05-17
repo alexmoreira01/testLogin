@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Todo {
+  id         String     @id
+  label      String     @unique
+  status     TaskStatus @default(pending)
+  created_at DateTime   @default(now())
+  updated_at DateTime?  @updatedAt
+
+  @@index([label])
+}
+
+enum TaskStatus {
+  completed
+  pending
+}
+
+model User {
+  id         String   @id
+  name       String
+  email      String   @unique
+  password   String
+  isAdmin    Boolean  @default(false)
+  avatar_url String?
+  created_at DateTime @default(now())
+
+  tokens Token[]
+
+  @@index([email])
+}
+
+model Token {
+  id            String   @id
+  refresh_token String   @db.VarChar(255)
+  user_id       String
+  expires_date  DateTime
+  created_at    DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+}
